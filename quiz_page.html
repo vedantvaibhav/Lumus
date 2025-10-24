@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - Lumos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'General Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-image: url('./images/background.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Quiz Page Styles */
+        .quiz-page {
+            min-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 32px 24px;
+            background: rgba(0, 0, 0, 0.1);
+            min-height: 100vh;
+        }
+
+        /* Quiz Header */
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 48px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .quiz-title {
+            color: #FFF;
+            font-family: "General Sans";
+            font-size: 36px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            margin-bottom: 8px;
+        }
+
+        .quiz-meta {
+            color: #FFDBCB;
+            text-align: center;
+            font-family: "General Sans";
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            margin-bottom: 24px;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 24px;
+            margin-top: 24px;
+        }
+
+        .progress-segment {
+            min-width: 4px;
+            height: 4px;
+            width: 56px;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.4);
+            transition: all 0.3s ease-in-out;
+            position: relative;
+        }
+
+        .progress-segment.current {
+            background: #FFF;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+        }
+
+        .progress-segment.correct {
+            background: #90EE90;
+        }
+
+        .progress-segment.incorrect {
+            background: #FF6B6B;
+        }
+
+        .progress-segment:hover {
+            transform: scale(1.1);
+        }
+
+        /* Responsive Progress Bar */
+        @media (max-width: 768px) {
+            .progress-container {
+                gap: 8px;
+            }
+            .progress-segment {
+                width: 3px;
+                height: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .progress-container {
+                gap: 6px;
+            }
+            .progress-segment {
+                width: 3px;
+                height: 36px;
+            }
+        }
+
+        /* Question Container */
+        .question-container {
+            display: flex;
+            width: 800px;
+            padding: 24px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 24px;
+            background: rgba(255, 255, 255, 0.606);
+            border-radius: 24px;
+            margin: 0  auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .question-number {
+            font-family: "General Sans", sans-serif;
+            font-size: 0.875rem;
+            color: #52525B;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .question-text {
+            color: var(--text-default, #18181A);
+            font-family: Inter;
+            font-size: 24px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 20px; /* 142.857% */
+            margin-bottom: 24px;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .option {
+            padding: 16px 20px;
+            border-radius: 12px;
+            background: #FFF;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: "General Sans", sans-serif;
+            font-size: 1rem;
+            color: #374151;
+            text-align: left;
+        }
+
+        .option:hover {
+            border-color: #3B82F6;
+            background: #F8FAFC;
+        }
+
+        .option.selected {
+            border-color: #3B82F6;
+            background: #EBF4FF;
+        }
+
+        .option.correct {
+            border-color: #10B981;
+            background: #ECFDF5;
+        }
+
+        .option.incorrect {
+            border-color: #EF4444;
+            background: #FEF2F2;
+        }
+
+        /* Feedback */
+        .feedback {
+            width: 800px;
+            margin: 0 auto;
+            margin-top: 20px;
+            padding: 16px;
+            border-radius: 24px;
+            font-family: "General Sans", sans-serif;
+            font-size: 1rem;
+            line-height: 1.5;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: #ECFDF5;
+            color: #065F46;
+            border: 1px solid #10B981;
+        }
+
+        .feedback.incorrect {
+            background: #FEF2F2;
+            color: #991B1B;
+            border: 1px solid #EF4444;
+        }
+
+        /* Next Button */
+        .next-btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 32px;
+        }
+
+        .next-btn {
+            background: #3B82F6;
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-family: "General Sans", sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .next-btn:hover:not(:disabled) {
+            background: #2563EB;
+            transform: translateY(-2px);
+        }
+
+        .next-btn:disabled {
+            background: #9CA3AF;
+            cursor: not-allowed;
+        }
+
+        /* Results Page */
+        .results-page {
+            display: none;
+            text-align: center;
+            padding: 48px 24px;
+        }
+
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3B82F6, #1D4ED8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            color: white;
+            font-family: "General Sans", sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .results-title {
+            color: #FFF;
+            font-family: "General Sans";
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .results-message {
+            color: #FFDBCB;
+            font-family: "General Sans";
+            font-size: 18px;
+            margin-bottom: 32px;
+        }
+
+        .restart-btn {
+            background: #3B82F6;
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-family: "General Sans", sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .restart-btn:hover {
+            background: #2563EB;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Quiz Page -->
+    <div class="quiz-page" id="quizPage">
+        <div class="quiz-header">
+            <div class="quiz-title" id="quizTitle">Math Basics</div>
+            <div class="quiz-meta" id="quizMeta">10 Questions • Medium Difficulty</div>
+            <div class="progress-container" id="progressContainer">
+                <!-- Progress segments will be generated here -->
+            </div>
+        </div>
+        
+        <div class="question-container" id="questionContainer">
+            <!-- Question content will be populated here -->
+        </div>
+        
+        <div class="feedback" id="feedback">
+            <!-- Feedback will be shown here -->
+        </div>
+        
+        <div class="next-btn-container">
+            <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next Question</button>
+        </div>
+    </div>
+
+    <!-- Results Page -->
+    <div class="results-page" id="resultsPage">
+        <div class="score-circle" id="scoreCircle">0/10</div>
+        <div class="results-title">Quiz Complete!</div>
+        <div class="results-message" id="resultsMessage">Great job! You scored 0 out of 10 questions correctly.</div>
+        <button class="restart-btn" onclick="restartQuiz()">Take Another Quiz</button>
+    </div>
+
+    <script>
+        // Quiz state
+        let currentQuiz = null;
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let score = 0;
+
+        // Sample quiz data for testing
+        const sampleQuiz = {
+            title: "Math Basics",
+            total_questions: 10,
+            questions: [
+                {
+                    question: "What is 2 + 2?",
+                    options: ["3", "4", "5", "6"],
+                    answer: "4"
+                },
+                {
+                    question: "What is 5 × 3?",
+                    options: ["12", "15", "18", "20"],
+                    answer: "15"
+                },
+                {
+                    question: "What is 10 - 4?",
+                    options: ["5", "6", "7", "8"],
+                    answer: "6"
+                },
+                {
+                    question: "What is 8 ÷ 2?",
+                    options: ["3", "4", "5", "6"],
+                    answer: "4"
+                },
+                {
+                    question: "What is 7 + 3?",
+                    options: ["9", "10", "11", "12"],
+                    answer: "10"
+                }
+            ]
+        };
+
+        // Initialize quiz
+        function initQuiz() {
+            currentQuiz = sampleQuiz;
+            currentQuestionIndex = 0;
+            userAnswers = [];
+            score = 0;
+            
+            document.getElementById('quizPage').style.display = 'block';
+            document.getElementById('resultsPage').style.display = 'none';
+            
+            document.getElementById('quizTitle').textContent = currentQuiz.title;
+            document.getElementById('quizMeta').textContent = `${currentQuiz.total_questions} Questions • Medium Difficulty`;
+            
+            showQuestion();
+        }
+
+        // Show current question
+        function showQuestion() {
+            const question = currentQuiz.questions[currentQuestionIndex];
+            const container = document.getElementById('questionContainer');
+            
+            // Update progress segments
+            updateProgressSegments();
+            
+            let html = `
+                <div class="question-text">${question.question}</div>
+                <div class="options-container">
+            `;
+            
+            question.options.forEach((option, index) => {
+                html += `
+                    <div class="option" onclick="selectOption('${option}')">
+                        ${option}
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            container.innerHTML = html;
+            
+            // Reset feedback and next button
+            document.getElementById('feedback').style.display = 'none';
+            document.getElementById('nextBtn').disabled = false;
+        }
+
+        // Update progress bar segments
+        function updateProgressSegments() {
+            const container = document.getElementById('progressContainer');
+            container.innerHTML = '';
+            
+            for (let i = 0; i < currentQuiz.total_questions; i++) {
+                const segment = document.createElement('div');
+                segment.className = 'progress-segment';
+                
+                if (i === currentQuestionIndex) {
+                    segment.classList.add('current');
+                } else if (i < currentQuestionIndex) {
+                    // Check if the question was answered correctly
+                    if (currentQuiz.questions[i].userAnswer === currentQuiz.questions[i].answer) {
+                        segment.classList.add('correct');
+                    } else {
+                        segment.classList.add('incorrect');
+                    }
+                }
+                
+                container.appendChild(segment);
+            }
+        }
+
+        // Select an option
+        function selectOption(userAnswer) {
+            const question = currentQuiz.questions[currentQuestionIndex];
+            const options = document.querySelectorAll('.option');
+            
+            // Remove previous selections
+            options.forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Mark selected option
+            event.target.classList.add('selected');
+            
+            // Store user answer
+            question.userAnswer = userAnswer;
+            userAnswers[currentQuestionIndex] = userAnswer;
+            
+            // Check answer
+            checkAnswer(userAnswer);
+        }
+
+        // Check if answer is correct
+        function checkAnswer(userAnswer) {
+            const question = currentQuiz.questions[currentQuestionIndex];
+            const feedback = document.getElementById('feedback');
+            const nextBtn = document.getElementById('nextBtn');
+            const options = document.querySelectorAll('.option');
+            
+            if (userAnswer === question.answer) {
+                // Correct answer - show green active state and move to next question after 2 seconds
+                score++;
+                
+                // Find and highlight the correct answer in green
+                options.forEach(option => {
+                    if (option.textContent.trim() === userAnswer) {
+                        option.classList.add('correct');
+                    }
+                });
+                
+                // Show feedback
+                feedback.className = 'feedback correct';
+                feedback.textContent = 'Correct! Well done.';
+                feedback.style.display = 'block';
+                
+                // Move to next question after 2 seconds
+                setTimeout(() => {
+                    nextQuestion();
+                }, 2000); // 2 seconds delay
+            } else {
+                // Incorrect answer - show feedback and enable next button
+                feedback.className = 'feedback incorrect';
+                feedback.textContent = `Incorrect. The correct answer is ${question.answer}.`;
+                feedback.style.display = 'block';
+                nextBtn.disabled = false;
+            }
+        }
+
+        // Move to next question
+        function nextQuestion() {
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex < currentQuiz.questions.length) {
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        // Show results
+        function showResults() {
+            document.getElementById('quizPage').style.display = 'none';
+            document.getElementById('resultsPage').style.display = 'block';
+            
+            const scoreCircle = document.getElementById('scoreCircle');
+            const resultsMessage = document.getElementById('resultsMessage');
+            
+            scoreCircle.textContent = `${score}/${currentQuiz.total_questions}`;
+            resultsMessage.textContent = `Great job! You scored ${score} out of ${currentQuiz.total_questions} questions correctly.`;
+        }
+
+        // Restart quiz
+        function restartQuiz() {
+            // Go back to main page
+            window.location.href = 'interactive_quiz.html';
+        }
+
+        // Initialize quiz when page loads
+        window.addEventListener('load', initQuiz);
+    </script>
+</body>
+</html>
