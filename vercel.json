@@ -13,7 +13,7 @@
     },
     {
       "src": "/interactive_quiz.html",
-      "dest": "/interactive_quiz.html"
+      "dest": "/index.html"
     },
     {
       "src": "/api/(.*)",
