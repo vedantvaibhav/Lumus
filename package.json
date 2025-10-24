@@ -1,0 +1,22 @@
+{
+  "name": "self-quiz-generator-agent",
+  "version": "1.0.0",
+  "description": "AI-powered quiz generator with web search integration",
+  "main": "index.html",
+  "scripts": {
+    "start": "python enhanced_server.py",
+    "dev": "python enhanced_server.py"
+  },
+  "keywords": [
+    "quiz",
+    "ai",
+    "education",
+    "google-gemini",
+    "web-search"
+  ],
+  "author": "Vedant Vaibhav",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

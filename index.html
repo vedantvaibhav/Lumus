@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self-Quiz Generator Agent</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        .feature {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .feature h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        .cta {
+            text-align: center;
+            margin-top: 40px;
+        }
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s ease;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎓 Self-Quiz Generator Agent</h1>
+            <p>Generate intelligent quizzes from any topic using AI + Web Search</p>
+        </div>
+        
+        <div class="features">
+            <div class="feature">
+                <h3>🤖 AI-Powered</h3>
+                <p>Uses Google Gemini AI to generate intelligent quiz questions</p>
+            </div>
+            <div class="feature">
+                <h3>🌐 Web Search</h3>
+                <p>Gathers real-time data from Wikipedia and web sources</p>
+            </div>
+            <div class="feature">
+                <h3>📱 Interactive</h3>
+                <p>Step-by-step quiz experience with instant feedback</p>
+            </div>
+            <div class="feature">
+                <h3>🎯 Smart Questions</h3>
+                <p>Multiple choice and true/false questions only</p>
+            </div>
+        </div>
+        
+        <div class="cta">
+            <a href="/interactive_quiz.html" class="btn">🚀 Start Generating Quizzes</a>
+        </div>
+        
+        <div style="text-align: center; margin-top: 40px; color: #666;">
+            <p>Built with ❤️ using Multi-Agent Architecture</p>
+        </div>
+    </div>
+</body>
+</html>

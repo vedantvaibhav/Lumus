@@ -1052,7 +1052,7 @@
 
             try {
                 // Try to get quiz from server first
-                const response = await fetch('http://localhost:8000/generate-quiz', {
+                const response = await fetch('/api/generate-quiz', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
