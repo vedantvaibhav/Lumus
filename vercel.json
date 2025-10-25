@@ -1,12 +1,4 @@
 {
-  "functions": {
-    "api/generate-quiz.py": {
-      "runtime": "python3.9"
-    }
-  },
-  "env": {
-    "GOOGLE_API_KEY": "AIzaSyBaWa_oPFgBou2dneLGAMQs6aBwVh0eQUE"
-  },
   "headers": [
     {
       "source": "/api/(.*)",
