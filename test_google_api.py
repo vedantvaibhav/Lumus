@@ -15,7 +15,7 @@ def test_google_api():
     print("=" * 40)
     
     # Set the API key
-    api_key = "AIzaSyALHcpX6Bfw8-qWgbBpz3bxgF8G8Yg0tvA"
+    api_key = "AIzaSyBaWa_oPFgBou2dneLGAMQs6aBwVh0eQUE"
     os.environ['GOOGLE_API_KEY'] = api_key
     
     try:

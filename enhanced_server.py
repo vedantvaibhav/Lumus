@@ -85,7 +85,7 @@ class EnhancedQuizHandler(BaseHTTPRequestHandler):
     def serve_html(self):
         """Serve the interactive quiz HTML file."""
         try:
-            with open('interactive_quiz.html', 'r', encoding='utf-8') as f:
+            with open('index.html', 'r', encoding='utf-8') as f:
                 content = f.read()
             
             self.send_response(200)

@@ -356,13 +356,11 @@
             padding: 24px;
             flex-direction: column;
             align-items: flex-start;
-            gap: 24px;
-            background: rgba(255, 255, 255, 0.95);
+            gap: 0px;
+            background: rgba(255, 255, 255, 0.70);
             backdrop-filter: blur(20px);
             border-radius: 24px;
-            margin: 0 auto 32px auto;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin: 0 auto 12px auto;
         }
 
         .question-number {
@@ -376,12 +374,13 @@
         }
 
         .question-text {
-            font-family: "General Sans", sans-serif;
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #1F2937;
+            color: #000;
+            font-family: Inter;
+            font-size: 24px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 20px; /* 142.857% */
             margin-bottom: 40px;
-            line-height: 1.5;
         }
 
         /* Options Container */
@@ -389,13 +388,14 @@
             display: flex;
             flex-direction: column;
             gap: 16px;
+            width: 100%;
         }
 
         .option {
             background: #FFF;
-            border: 2px solid #E5E7EB;
+        
             border-radius: 16px;
-            padding: 24px;
+            padding: 12px;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
@@ -412,14 +412,13 @@
             left: 0;
             width: 0;
             height: 100%;
-            background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
             transition: width 0.3s ease;
         }
 
         .option:hover {
-            border-color: #3B82F6;
+            border-color: #374151;
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
         }
 
         .option:hover::before {
@@ -427,9 +426,9 @@
         }
 
         .option.selected {
-            border-color: #3B82F6;
-            background: linear-gradient(135deg, #EBF8FF 0%, #F0F9FF 100%);
-            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.2);
+            border-color: #374151;
+            background: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 100%);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
         }
 
         .option.correct {
@@ -461,12 +460,12 @@
         }
 
         .option:hover .option-letter {
-            background: #3B82F6;
+            background: #374151;
             color: #FFF;
         }
 
         .option.selected .option-letter {
-            background: #3B82F6;
+            background: #374151;
             color: #FFF;
         }
 
@@ -491,21 +490,26 @@
 
         /* Feedback */
         .feedback {
-            margin-top: 32px;
-            padding: 24px;
+            width: 800px;
+            margin: 8px auto 0 auto;
+            padding: 12px 24px;
             border-radius: 16px;
             display: none;
             backdrop-filter: blur(20px);
+            font-family: "General Sans", sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.4;
         }
 
         .feedback.correct {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
+            background: linear-gradient(135deg, rgb(202, 255, 237) 0%, rgb(202, 255, 237) 100%);
             border: 1px solid rgba(16, 185, 129, 0.2);
             color: #065F46;
         }
 
         .feedback.incorrect {
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%);
+            background: linear-gradient(135deg, rgb(255, 207, 207) 0%,  rgb(255, 207, 207) 100%);
             border: 1px solid rgba(239, 68, 68, 0.2);
             color: #991B1B;
         }
@@ -528,11 +532,13 @@
         .next-btn-container {
             text-align: center;
             margin-top: 32px;
+            display: block;
+            visibility: visible;
         }
 
         .next-btn {
-            background: linear-gradient(135deg, #FFF 0%, rgba(255, 255, 255, 0.9) 100%);
-            color: #1F2937;
+            background: #FFF;
+            color: #000;
             border: none;
             padding: 16px 48px;
             border-radius: 16px;
@@ -541,15 +547,21 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: inline-block;
+            visibility: visible;
+            opacity: 1;
+            position: relative;
+            z-index: 10;
+            width: 200px;
+            min-width: 200px;
+            max-width: 200px;
         }
 
         .next-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-            background: linear-gradient(135deg, #FFF 0%, #FFF 100%);
+            
+            background: #F9FAFB;
         }
 
         .next-btn:active {
@@ -560,7 +572,38 @@
             opacity: 0.5;
             cursor: not-allowed;
             transform: none;
-            background: rgba(255, 255, 255, 0.5);
+            background: #F3F4F6;
+            color: #9CA3AF;
+        }
+
+        .next-btn.loading {
+            position: relative;
+            overflow: hidden;
+            width: 200px;
+            min-width: 200px;
+            max-width: 200px;
+        }
+
+        .next-btn.loading::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0%;
+            background: #ffffff;
+            animation: progressBar 2s linear forwards;
+            z-index: 1;
+        }
+
+        .next-btn.loading span {
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes progressBar {
+            0% { width: 0%; }
+            100% { width: 100%; }
         }
 
         /* Results Page */
@@ -579,7 +622,7 @@
             align-items: center;
             justify-content: center;
             margin: 0 auto 30px;
-            color: white;
+            color: rgba(0, 0, 0, 0.505);
             font-size: 3rem;
             font-weight: bold;
         }
@@ -598,9 +641,9 @@
         }
 
         .action-btn {
-            background: white;
-            border: 2px solid #667eea;
-            color: #667eea;
+            background: #FFF;
+            border: none;
+            color: #000;
             padding: 15px 30px;
             border-radius: 50px;
             font-size: 1.1rem;
@@ -612,14 +655,15 @@
         }
 
         .action-btn:hover {
-            background: #667eea;
-            color: white;
+            background: #F9FAFB;
+            color: #000;
+            border-color: #D1D5DB;
         }
 
         .action-btn.primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-color: transparent;
+            background: #FFF;
+            color: #000;
+            border: none;
         }
 
         /* Loading Animation */
@@ -784,9 +828,10 @@
             </div>
             <div class="loading-text">Building the quiz</div>
         </div>
+    </div>
 
-        <!-- Quiz Page -->
-        <div class="quiz-page" id="quizPage">
+    <!-- Quiz Page -->
+    <div class="quiz-page" id="quizPage">
             <div class="quiz-header">
                 <div class="quiz-title" id="quizTitle">Quiz Title</div>
                 <div class="quiz-meta" id="quizMeta">10 Questions • Medium Difficulty</div>
@@ -804,12 +849,13 @@
             </div>
             
             <div class="next-btn-container">
-                <button class="next-btn" id="nextBtn" onclick="nextQuestion()" disabled>Next Question</button>
+                <button class="next-btn" id="nextBtn" onclick="nextQuestion()" disabled>Next</button>
             </div>
         </div>
+    </div>
 
-        <!-- Results Page -->
-        <div class="results-page" id="resultsPage">
+    <!-- Results Page -->
+    <div class="results-page" id="resultsPage">
             <div class="score-circle" id="scoreCircle">0/10</div>
             <div class="score-text" id="scoreText">Great job! You completed the quiz!</div>
             
@@ -818,7 +864,6 @@
                 <button class="action-btn" onclick="retakeQuiz()">Retake This Quiz</button>
             </div>
         </div>
-    </div>
 
     <script>
         // Global variables
@@ -1006,6 +1051,12 @@
             const container = document.getElementById('progressContainer');
             container.innerHTML = '';
             
+            // Safety check for quiz data
+            if (!currentQuiz || !currentQuiz.total_questions) {
+                console.error('Quiz data not available for progress segments');
+                return;
+            }
+            
             for (let i = 0; i < currentQuiz.total_questions; i++) {
                 const segment = document.createElement('div');
                 segment.className = 'progress-segment';
@@ -1052,13 +1103,13 @@
 
             try {
                 // Try to get quiz from server first
-                const response = await fetch('http://localhost:8000/generate-quiz', {
+                const response = await fetch('http://localhost:8080/generate-quiz', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        api_key: 'AIzaSyALHcpX6Bfw8-qWgbBpz3bxgF8G8Yg0tvA',
+                        api_key: 'AIzaSyBaWa_oPFgBou2dneLGAMQs6aBwVh0eQUE',
                         topic: topic,
                         num_questions: 10
                     })
@@ -1093,9 +1144,17 @@
             loadingPage.classList.remove('show');
             setTimeout(() => {
                 loadingPage.style.display = 'none';
-                // Redirect to quiz page
-                window.location.href = 'quiz_page.html';
+                // Show quiz page
+                document.getElementById('quizPage').classList.add('show');
+                document.body.classList.add('quiz-active');
             }, 500);
+            
+            // Safety check before showing quiz
+            if (!currentQuiz || !currentQuiz.questions || currentQuiz.questions.length === 0) {
+                console.error('Quiz data is invalid:', currentQuiz);
+                alert('Failed to load quiz data. Please try again.');
+                return;
+            }
             
             // Update quiz header
             document.getElementById('quizTitle').textContent = currentQuiz.title.replace(' Quiz', '');
@@ -1153,6 +1212,12 @@
         }
 
         function showQuestion() {
+            // Safety check for quiz data
+            if (!currentQuiz || !currentQuiz.questions || !currentQuiz.questions[currentQuestionIndex]) {
+                console.error('Quiz data not available:', { currentQuiz, currentQuestionIndex });
+                return;
+            }
+            
             const question = currentQuiz.questions[currentQuestionIndex];
             const container = document.getElementById('questionContainer');
             
@@ -1160,7 +1225,6 @@
             updateProgressSegments();
             
             let html = `
-                <div class="question-number">Question ${currentQuestionIndex + 1} of ${currentQuiz.total_questions}</div>
                 <div class="question-text">${question.question}</div>
             `;
 
@@ -1227,19 +1291,51 @@
             }
             
             showFeedback(isCorrect, correctAnswer, question.explanation);
-            document.getElementById('nextBtn').disabled = false;
+            
+            if (isCorrect) {
+                // Auto-advance for correct answers with loading effect
+                const nextBtn = document.getElementById('nextBtn');
+                const nextBtnContainer = document.querySelector('.next-btn-container');
+                
+                // Ensure container and button are visible
+                if (nextBtnContainer) {
+                    nextBtnContainer.style.display = 'block';
+                    nextBtnContainer.style.visibility = 'visible';
+                }
+                
+                nextBtn.innerHTML = '<span>Next Question</span>';
+                nextBtn.classList.add('loading');
+                nextBtn.disabled = false;
+                nextBtn.style.display = 'inline-block';
+                nextBtn.style.visibility = 'visible';
+                nextBtn.style.opacity = '1';
+                
+                // Auto-advance after 2 seconds
+                setTimeout(() => {
+                    nextQuestion();
+                }, 2000);
+            } else {
+                // Manual advance for incorrect answers
+                const nextBtn = document.getElementById('nextBtn');
+                const nextBtnContainer = document.querySelector('.next-btn-container');
+                
+                if (nextBtnContainer) {
+                    nextBtnContainer.style.display = 'block';
+                    nextBtnContainer.style.visibility = 'visible';
+                }
+                
+                nextBtn.disabled = false;
+                nextBtn.style.display = 'inline-block';
+                nextBtn.style.visibility = 'visible';
+                nextBtn.style.opacity = '1';
+            }
         }
 
         function showFeedback(isCorrect, correctAnswer, explanation) {
             const feedback = document.getElementById('feedback');
-            const icon = isCorrect ? '✅' : '❌';
             const message = isCorrect ? 'Correct!' : `Incorrect. The correct answer is: ${correctAnswer}`;
             
-            feedback.innerHTML = `
-                <div class="feedback-icon">${icon}</div>
-                <div><strong>${message}</strong></div>
-                <div class="explanation">${explanation}</div>
-            `;
+            feedback.innerHTML = `<div>${message}</div>`;
             
             feedback.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
             feedback.style.display = 'block';
@@ -1269,6 +1365,18 @@
         }
 
         function nextQuestion() {
+            // Safety check for quiz data
+            if (!currentQuiz || !currentQuiz.total_questions) {
+                console.error('Quiz data not available for nextQuestion');
+                return;
+            }
+            
+            // Reset button state
+            const nextBtn = document.getElementById('nextBtn');
+            nextBtn.innerHTML = 'Next';
+            nextBtn.classList.remove('loading');
+            nextBtn.disabled = true;
+            
             currentQuestionIndex++;
             
             if (currentQuestionIndex < currentQuiz.total_questions) {
