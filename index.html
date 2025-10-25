@@ -1102,8 +1102,14 @@
             const minLoadingTime = 1000; // 1 second minimum
 
             try {
+                // Determine API endpoint based on environment
+                const isProduction = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+                const apiUrl = isProduction 
+                    ? 'https://lumus-api.vercel.app/api/generate-quiz'  // Production API
+                    : 'http://localhost:8080/generate-quiz';  // Local development
+                
                 // Try to get quiz from server first
-                const response = await fetch('http://localhost:8080/generate-quiz', {
+                const response = await fetch(apiUrl, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -1303,7 +1309,7 @@
                     nextBtnContainer.style.visibility = 'visible';
                 }
                 
-                nextBtn.innerHTML = '<span>Next Question</span>';
+                nextBtn.innerHTML = '<span>Next</span>';
                 nextBtn.classList.add('loading');
                 nextBtn.disabled = false;
                 nextBtn.style.display = 'inline-block';
