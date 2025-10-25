@@ -1,10 +1,11 @@
 const https = require('https');
 
 export default async function handler(req, res) {
-  // Set CORS headers
+  // Set CORS headers for all origins
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+  res.setHeader('Access-Control-Max-Age', '86400');
 
   // Handle preflight requests
   if (req.method === 'OPTIONS') {

@@ -1105,7 +1105,7 @@
                 // Determine API endpoint based on environment
                 const isProduction = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
                 const apiUrl = isProduction 
-                    ? 'https://lumus-taupe.vercel.app/api/generate-quiz'  // Production API
+                    ? 'https://lumus-three.vercel.app/api/generate-quiz'  // Production API (same domain)
                     : 'http://localhost:8080/generate-quiz';  // Local development
                 
                 console.log('🌐 Environment:', isProduction ? 'Production' : 'Local');
