@@ -1108,6 +1108,9 @@
                     ? 'https://lumus-taupe.vercel.app/api/generate-quiz'  // Production API
                     : 'http://localhost:8080/generate-quiz';  // Local development
                 
+                console.log('🌐 Environment:', isProduction ? 'Production' : 'Local');
+                console.log('🔗 API URL:', apiUrl);
+                
                 // Try to get quiz from server first
                 const response = await fetch(apiUrl, {
                     method: 'POST',
